@@ -16,7 +16,7 @@ public class TestDAO {
 		}
 
 		ExtFlightDelaysDAO dao = new ExtFlightDelaysDAO();
-		System.out.println(dao.loadAllStates());
+		System.out.println(dao.loadAd());
 	}
 
 }

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.extflightdelays.model.Model;
+import it.polito.tdp.extflightdelays.model.Vicino;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,7 +29,7 @@ public class FXMLController {
     private Button btnCreaGrafo;
 
     @FXML
-    private ComboBox<?> cmbBoxStati;
+    private ComboBox<String> cmbBoxStati;
 
     @FXML
     private Button btnVisualizzaVelivoli;
@@ -45,6 +46,13 @@ public class FXMLController {
     @FXML
     void doCreaGrafo(ActionEvent event) {
 
+    	txtResult.clear();
+    	cmbBoxStati.getItems().clear();
+    	
+    	model.creaGrafo();
+    	this.txtResult.setText(String.format("GRAFO CREATO! \n#%d VERTICI\n#%d ARCHI", model.nVertici(),model.nArchi()));
+    	
+    	this.cmbBoxStati.getItems().addAll(model.getStates());
     }
 
     @FXML
@@ -55,6 +63,18 @@ public class FXMLController {
     @FXML
     void doVisualizzaVelivoli(ActionEvent event) {
 
+    	txtResult.clear();
+
+    	String source = this.cmbBoxStati.getValue();
+    	
+    	if(source == null) {
+    		txtResult.setText("NON HAI CLICCATO ALCUNO STATO DI PARTENZA");
+    		return;
+    	}
+    	
+    	for(Vicino v : model.getVicini(source)) {
+    		txtResult.appendText(v.toString()+"\n");
+    	}
     }
 
     @FXML
